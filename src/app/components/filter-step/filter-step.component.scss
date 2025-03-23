@@ -1,0 +1,37 @@
+.filter-step {
+  .step-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+    margin-bottom: 10px;
+  }
+
+  .step-label {
+    font-size: 12px;
+  }
+
+  .icon {
+    padding: 0;
+    margin: 0;
+  }
+
+  .step-selects {
+    display: flex;
+    gap: .5rem
+  }
+
+  .self-end {
+    align-self: flex-end;
+  }
+
+  .align-right {
+    margin-left: auto;
+  }
+
+  .attr-operator-row {
+    display: flex;
+    gap: .5rem;
+  }
+
+}

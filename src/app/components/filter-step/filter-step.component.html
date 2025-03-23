@@ -1,0 +1,126 @@
+<div class="filter-step" [attr.data-step-number]="stepNumber()">
+  <!-- Step Header -->
+  <div class="step-header">
+    <span class="step-label">
+      {{ stepLabel() }}
+      <button class="icon">
+        <img
+          ngSrc="assets/icons/pencil.svg"
+          alt="Edit"
+          height="14"
+          width="14"
+          priority
+        />
+      </button>
+    </span>
+    @if (showCopyButton()) {
+      <button (click)="copyStep.emit()" class="icon align-right">
+        <img
+          ngSrc="assets/icons/papers.svg"
+          alt="Copy"
+          height="14"
+          width="14"
+          priority
+        />
+      </button>
+    }
+    @if (showRemoveButton()) {
+      <button (click)="removeStep.emit()" class="icon">
+        <img
+          ngSrc="assets/icons/trash.svg"
+          alt="Remove"
+          height="14"
+          width="14"
+          priority
+        />
+      </button>
+    }
+  </div>
+
+  <!-- Loading and Error States -->
+  @if (loading()) {
+    <div class="loading-state">
+      <p>Loading events data...</p>
+    </div>
+  } @else if (error()) {
+    <div class="error-message">
+      <p>{{ error() }}</p>
+      <button class="retry-button" (click)="retryFetch()">Retry</button>
+    </div>
+  } @else {
+    <!-- Event and Attribute Selection -->
+    <div class="step-selects">
+      <!-- Event Type Select -->
+      <app-searchable-select
+        [options]="eventTypeOptions()"
+        [selectedValue]="selectedEventType()"
+        (selectionChange)="onEventTypeSelected($event)"
+        placeholder="Select an event"
+      ></app-searchable-select>
+
+      @if (selectedEventType()) {
+        <div class="attributes-section">
+          <!-- Existing Attributes -->
+          @for (attributeName of attributeRows(); track attributeName; let i = $index) {
+            <div class="attr-row">
+              <div class="attr-operator-row">
+                <app-searchable-select
+                  [options]="eventAttributeOptions()"
+                  [selectedValue]="attributeName"
+                  (selectionChange)="onAttributeChange($event, attributeName)"
+                  placeholder="Selected an attribute"
+                  [inputLabel]="selectedEventType() || ''"
+                ></app-searchable-select>
+
+
+                <app-operator-select
+                  [attributeType]="getAttributeType(attributeName)"
+                  [selectedOperator]="getSelectedOperator(attributeName)"
+                  (operatorSelected)="onOperatorChange(attributeName, $event)"
+                >
+                </app-operator-select>
+
+                <button
+                  (click)="removeAttributeRow(attributeName)"
+                  class="remove-icon"
+                >
+                  ✕
+                </button>
+              </div>
+
+            </div>
+          }
+
+          <!-- Adding New Attributes -->
+          <div class="attr-operator-row">
+            @if (showFirstAttributeSelect) {
+              <app-searchable-select
+                [options]="eventAttributeOptions()"
+                [selectedValue]="newAttributeSelection()"
+                (selectionChange)="onNewAttributeSelected($event)"
+                placeholder="Select an attribute"
+                [inputLabel]="selectedEventType() || ''"
+              ></app-searchable-select>
+              <app-operator-select
+                [attributeType]="newAttributeSelection() ? getAttributeType(newAttributeSelection()!) : 'string'"
+                [selectedOperator]="getSelectedOperator(newAttributeSelection()!)"
+                (operatorSelected)="onOperatorChange(newAttributeSelection() ?? '', $event)"
+              ></app-operator-select>
+
+
+            } @else {
+              <button app-button appearance="link" (click)="handleShowAttributeSelect()">+ Add an event attribute
+              </button>
+            }
+          </div>
+
+          @if (newAttributeSelection()) {
+            <div class="add-attribute-row">
+              <button app-button appearance="link" (click)="addRow()">Refine more</button>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>
