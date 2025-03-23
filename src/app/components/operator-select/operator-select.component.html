@@ -1,0 +1,53 @@
+<div class="operator-select">
+  <!-- Always visible row with operator dropdown and input field -->
+  <div class="main-controls">
+    <div class="operators">
+      <app-operator-options
+        [type]="currentType()"
+        [selectedOperator]="currentOperator()"
+        (operatorChange)="onOperatorChange($event)"
+        (componentClicked)="toggleTypeSelector(true)">
+      </app-operator-options>
+    </div>
+
+
+    <!-- Input for adding new values - always visible -->
+    <div class="add-value">
+      <input
+        #valueInput
+        [type]="currentType() === 'number' ? 'number' : 'text'"
+        (input)="onInputChange(valueInput.value)"
+      />
+    </div>
+  </div>
+
+  <!-- Tabs and Values - only visible after clicking on select -->
+  @if (showTypeSelector()) {
+    <div class="expanded-controls">
+      <div class="tabs">
+        <button
+          (click)="selectType('string')"
+          [class.active]="currentType() === 'string'"
+        >
+          String
+        </button>
+        <button
+          (click)="selectType('number')"
+          [class.active]="currentType() === 'number'"
+        >
+          Number
+        </button>
+      </div>
+
+
+      <div class="values-container">
+        <app-operator-options
+          [type]="currentType()"
+          [selectedOperator]="currentOperator()"
+          (operatorChange)="onOperatorChange($event); toggleTypeSelector(false)">
+        </app-operator-options>
+
+      </div>
+    </div>
+  }
+</div>

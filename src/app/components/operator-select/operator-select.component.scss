@@ -1,0 +1,89 @@
+.operator-select-display {
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  padding: 1px 6px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f5f5f5;
+  width: 160px;
+  font-family: inherit;
+  height: 30px;
+}
+
+.main-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.operators {
+  min-width: 120px;
+}
+
+.expanded-controls {
+  margin-top: 8px;
+  padding: 8px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.tabs button {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.tabs button.active {
+  background-color: #e0e0e0;
+  font-weight: bold;
+}
+
+.values-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.value-chip {
+  background-color: #e0e0e0;
+  border-radius: 16px;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.remove-value {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  padding: 0;
+  color: #666;
+}
+
+.add-value {
+  display: flex;
+  flex-grow: 1;
+  gap: 4px;
+  width: 160px;
+  font-family: inherit;
+  height: 30px;
+}
+
+.add-value input {
+  flex-grow: 1;
+}
