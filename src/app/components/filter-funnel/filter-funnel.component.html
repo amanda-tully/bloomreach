@@ -1,0 +1,28 @@
+<div class="filter-funnel">
+  <div class="header-container">
+    <h1 class="header">Customer Filter</h1>
+    <button app-button appearance="link-danger" (click)="discardFilters()">Discard Filters</button>
+  </div>
+
+  <div class="content-container">
+    @for (step of steps(); track step.id) {
+      <app-filter-step
+        [stepNumber]="step.number"
+        (copyStep)="copyStep(step)"
+        (removeStep)="removeStep(step)"
+        [resetTrigger]="resetSignal()"
+      ></app-filter-step>
+      <hr class="divider"/>
+    }
+
+    <div class="add-funnel-button">
+      <button app-button appearance="link" size="large" (click)="addStep()">+ ADD FUNNEL STEP
+      </button>
+    </div>
+  </div>
+  <div class="filter-actions">
+
+
+    <button app-button (click)="applyFilters()">Apply filters</button>
+  </div>
+</div>

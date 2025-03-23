@@ -1,0 +1,41 @@
+.filter-funnel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.08), 0 3px 5px 0 rgba(0, 0, 0, 0.06);
+  border-radius: 4px;
+  margin: 12px;
+  background: #F8F7FD;
+
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header {
+    font-size: 12px;
+    color: #333333;
+    text-transform: uppercase;
+  }
+
+  .content-container {
+    background: #fff;
+    padding: 20px 10px;
+    border-radius: 4px;
+    border: 1px solid #efefef;
+  }
+
+  .divider {
+    border-top: 1px solid #efefef;
+    border-left: 0;
+    margin: 25px 0;
+  }
+
+  .add-funnel-button {
+    display: flex;
+    justify-content: center;
+  }
+
+}
