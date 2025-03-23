@@ -73,12 +73,15 @@
                 ></app-searchable-select>
 
 
-                <app-operator-select
-                  [attributeType]="getAttributeType(attributeName)"
-                  [selectedOperator]="getSelectedOperator(attributeName)"
-                  (operatorSelected)="onOperatorChange(attributeName, $event)"
-                >
-                </app-operator-select>
+                @if (attributeName) {
+                  <app-operator-select
+                    [attributeType]="getAttributeType(attributeName)"
+                    [selectedOperator]="getSelectedOperator(attributeName)"
+                    (operatorSelected)="onOperatorChange(attributeName, $event)"
+                  >
+                  </app-operator-select>
+                }
+
 
                 <button
                   (click)="removeAttributeRow(attributeName)"
@@ -101,11 +104,13 @@
                 placeholder="Select an attribute"
                 [inputLabel]="selectedEventType() || ''"
               ></app-searchable-select>
-              <app-operator-select
-                [attributeType]="newAttributeSelection() ? getAttributeType(newAttributeSelection()!) : 'string'"
-                [selectedOperator]="getSelectedOperator(newAttributeSelection()!)"
-                (operatorSelected)="onOperatorChange(newAttributeSelection() ?? '', $event)"
-              ></app-operator-select>
+              @if (newAttributeSelection()) {
+                <app-operator-select
+                  [attributeType]="getAttributeType(newAttributeSelection()!)"
+                  [selectedOperator]="getSelectedOperator(newAttributeSelection()!)"
+                  (operatorSelected)="onOperatorChange(newAttributeSelection() ?? '', $event)"
+                ></app-operator-select>
+              }
 
 
             } @else {
