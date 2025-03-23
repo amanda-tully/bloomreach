@@ -135,10 +135,24 @@ export class FilterStepComponent implements OnInit {
   showRemoveButton = computed(() => this.stepNumber() > 1);
 
   loadStepData() {
-    const stepData = this.filterStateService.getStep(this.stepNumber());
-    if (stepData) {
-      this.selectedEventType.set(stepData.eventType);
-      this.attributeRows.set(stepData.attributes.map((attr) => attr.name));
+    const step = this.filterStateService.getStep(this.stepNumber());
+
+    if (step) {
+      // Set the event type
+      this.selectedEventType.set(step.eventType);
+
+      // IMPORTANT: Clear any existing rows first to prevent duplicates
+      this.attributeRows.set([]);
+
+      // Set attribute rows based on existing attributes
+      if (step.attributes && step.attributes.length > 0) {
+        const attributeNames = step.attributes.map((attr) => attr.name);
+        this.attributeRows.set(attributeNames);
+      }
+
+      // Reset the newAttributeSelection to prevent duplicates
+      this.newAttributeSelection.set(null);
+      this.showFirstAttributeSelect = false;
     }
   }
 

@@ -55,21 +55,23 @@ export class FilterFunnelComponent {
 
   private copyStepData(fromStep: number, toStep: number) {
     const stepData = this.filterStateService.getStep(fromStep);
-    if (!stepData) return; // If no step data exists, exit early
+    if (!stepData) return;
 
-    // Set the new step's eventType
+    this.filterStateService.removeStep(toStep);
+
     this.filterStateService.updateStepEvent(toStep, stepData.eventType);
 
-    // Copy all attributes from the original step
-    stepData.attributes.forEach(({ name, operator }) =>
-      this.filterStateService.updateStepAttribute(
-        toStep,
-        name,
-        operator.type,
-        operator.operator,
-        operator.value,
-      ),
-    );
+    if (stepData.attributes) {
+      stepData.attributes.forEach(({ name, operator }) => {
+        this.filterStateService.updateStepAttribute(
+          toStep,
+          name,
+          operator.type,
+          operator.operator,
+          [...operator.value],
+        );
+      });
+    }
   }
 
   applyFilters() {

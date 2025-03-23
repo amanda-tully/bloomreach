@@ -14,11 +14,22 @@
     <!-- Input for adding new values - always visible -->
     <div class="add-value">
       <input
-        #valueInput
+        #valueInputFirst
         [type]="currentType() === 'number' ? 'number' : 'text'"
-        (input)="onInputChange(valueInput.value)"
+        (input)="onInputChange(valueInputFirst.value, 0)"
       />
+
+      @if (currentOperator() === 'between') {
+        and
+
+        <input
+          #valueInputSecond
+          [type]="currentType() === 'number' ? 'number' : 'text'"
+          (input)="onInputChange(valueInputSecond.value, 1)"
+        />
+      }
     </div>
+
   </div>
 
   <!-- Tabs and Values - only visible after clicking on select -->

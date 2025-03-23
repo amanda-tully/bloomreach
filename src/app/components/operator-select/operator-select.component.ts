@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, EventEmitter, input, Output, signal, inject } from '@angular/core';
+import { Component, effect, EventEmitter, input, Output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { OperatorOptionsComponent } from './operator-options.component';
 
@@ -19,20 +19,18 @@ export class OperatorSelectComponent {
   currentOperator = signal<string | null>(null);
   values = signal<(string | number)[]>([]);
 
-  currentInputValue: string | number | null = null;
-
   numberOperators = [
-    { value: 'equals', label: 'Equals' },
-    { value: 'not_equal', label: 'Not equal' },
+    { value: 'equals', label: 'equals' },
+    { value: 'not_equal', label: 'not equal' },
     { value: 'greater_than', label: 'Greater than' },
     { value: 'less_than', label: 'Less than' },
   ];
 
   stringOperators = [
-    { value: 'contains', label: 'Contains' },
-    { value: 'not_contains', label: 'Not contains' },
-    { value: 'equals', label: 'Equals' },
-    { value: 'not_equal', label: 'Not equal' },
+    { value: 'contains', label: 'contains' },
+    { value: 'not_contains', label: 'does not contain' },
+    { value: 'equals', label: 'equals' },
+    { value: 'not_equal', label: 'does not equal' },
   ];
 
   toggleTypeSelector(show?: boolean) {
@@ -99,27 +97,18 @@ export class OperatorSelectComponent {
     this.emitOperator();
   }
 
-  onInputChange(value: string) {
-    // If the input type is number, convert the value to a number
-    const typedValue = this.currentType() === 'number' ? (value ? Number(value) : null) : value;
+  onInputChange(value: string, index: number) {
+    // Convert value to number if the attribute type is number
+    const typedValue = this.currentType() === 'number' ? Number(value) : value;
 
-    // Store the current input value
-    this.currentInputValue = typedValue;
+    // Get current values array or initialize empty
+    const currentValues = [...(this.values() || [])];
 
-    // Update the values and emit on each keystroke
-    if (typedValue !== null && typedValue !== '') {
-      this.values.update((vals) => {
-        const updated = [...vals];
-        if (updated.length > 0) {
-          updated[updated.length - 1] = typedValue;
-        } else {
-          updated.push(typedValue);
-        }
-        return updated;
-      });
+    // Update or set the value at the specific index
+    currentValues[index] = typedValue;
 
-      this.emitOperator();
-    }
+    this.values.set(currentValues);
+    this.emitOperator();
   }
 
   emitOperator() {

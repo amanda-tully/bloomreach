@@ -64,15 +64,15 @@ export class OperatorOptionsComponent {
   }
 
   numberOperators = [
-    { value: 'equals', label: 'Equals' },
-    { value: 'not_equal', label: 'Not equal' },
-    { value: 'greater_than', label: 'Greater than' },
-    { value: 'less_than', label: 'Less than' },
+    { value: 'equals', label: 'equal to' },
+    { value: 'between', label: 'in between' },
+    { value: 'greater_than', label: 'greater than' },
+    { value: 'less_than', label: 'less than' },
   ];
   stringOperators = [
-    { value: 'contains', label: 'Contains' },
-    { value: 'not_contains', label: 'Not contains' },
-    { value: 'equals', label: 'Equals' },
-    { value: 'not_equal', label: 'Not equal' },
+    { value: 'contains', label: 'contains' },
+    { value: 'not_contains', label: 'does not contain' },
+    { value: 'equals', label: 'equals' },
+    { value: 'not_equal', label: 'does not equal' },
   ];
 }
