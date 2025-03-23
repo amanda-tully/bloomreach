@@ -1,0 +1,42 @@
+<div class="searchable-select" (clickOutside)="isOpen.set(false)">
+  <div
+    class="select-display"
+    [class.placeholder]="!selectedOption()"
+    (click)="toggleDropdown()"
+  >
+    {{ selectedOption()?.label || placeholder() }}
+    <span class="dropdown-arrow">
+    <img ngSrc="assets/icons/chevron_down.svg" alt="Arrow down" height="24" width="24" priority/>
+  </span>
+  </div>
+
+
+  @if (isOpen()) {
+    <div class="dropdown-container">
+      <div class="search-container">
+        @if (inputLabel()) {
+          <span class="inputLabel">{{ inputLabel() }}</span>
+        }
+        <input
+          #searchInput
+          [(ngModel)]="searchTerm"
+          (input)="filterOptions()"
+          placeholder="Filter events..."
+          class="search-input"
+          (click)="$event.stopPropagation()"
+        />
+      </div>
+      <div class="options-list">
+        @for (option of filteredOptions(); track option.value) {
+          <div
+            class="option"
+            [class.selected]="option.value === selectedValue()"
+            (click)="selectOption(option)"
+          >
+            {{ option.label }}
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>
