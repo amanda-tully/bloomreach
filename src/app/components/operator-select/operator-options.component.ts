@@ -23,30 +23,32 @@ import { FormsModule } from '@angular/forms';
     `,
   ],
   template: `
-    @switch (type()) {
-      @case ('string') {
-        <select
-          class="operator-select-display"
-          [ngModel]="selectedOperator()"
-          (change)="operatorChange.emit($event)"
-        >
-          @for (op of stringOperators; track op) {
-            <option [value]="op.value">{{ op.label }}</option>
-          }
-        </select>
+    <div class="operator-options" (click)="onComponentClick()">
+      @switch (type()) {
+        @case ('string') {
+          <select
+            class="operator-select-display"
+            [ngModel]="selectedOperator()"
+            (change)="operatorChange.emit($event)"
+          >
+            @for (op of stringOperators; track op) {
+              <option [value]="op.value">{{ op.label }}</option>
+            }
+          </select>
+        }
+        @case ('number') {
+          <select
+            class="operator-select-display"
+            [ngModel]="selectedOperator()"
+            (change)="operatorChange.emit($event)"
+          >
+            @for (op of numberOperators; track op) {
+              <option [value]="op.value">{{ op.label }}</option>
+            }
+          </select>
+        }
       }
-      @case ('number') {
-        <select
-          class="operator-select-display"
-          [ngModel]="selectedOperator()"
-          (change)="operatorChange.emit($event)"
-        >
-          @for (op of numberOperators; track op) {
-            <option [value]="op.value">{{ op.label }}</option>
-          }
-        </select>
-      }
-    }
+    </div>
   `,
 })
 export class OperatorOptionsComponent {
@@ -55,8 +57,14 @@ export class OperatorOptionsComponent {
 
   operatorChange = output<Event>();
 
+  componentClicked = output<void>();
+
+  onComponentClick() {
+    this.componentClicked.emit();
+  }
+
   numberOperators = [
-    { value: 'equal', label: 'Equal' },
+    { value: 'equals', label: 'Equals' },
     { value: 'not_equal', label: 'Not equal' },
     { value: 'greater_than', label: 'Greater than' },
     { value: 'less_than', label: 'Less than' },
@@ -64,7 +72,7 @@ export class OperatorOptionsComponent {
   stringOperators = [
     { value: 'contains', label: 'Contains' },
     { value: 'not_contains', label: 'Not contains' },
-    { value: 'equal', label: 'Equal' },
+    { value: 'equals', label: 'Equals' },
     { value: 'not_equal', label: 'Not equal' },
   ];
 }
